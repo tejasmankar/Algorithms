@@ -40,7 +40,8 @@ int main(void)
         else
         {
             //If the number of edges to be inserted in the graph is more than 0, then get the starting and ending vertices
-            //of all the edges that would be inserted in the graph
+            //of all the edges that would be inserted in the graph. This portion of the code is bypassed when the graph has
+            //only one vertex because in that case the graph will not have any edge
             if(number_of_edges > 0)
             {
                 cout << "Enter the starting and ending vertex of each edge separated by space:\n";
