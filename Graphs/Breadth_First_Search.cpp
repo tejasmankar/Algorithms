@@ -39,8 +39,8 @@ int main(void)
         }
         else
         {
-            //If the number of edges in the graph is more than 0, then get the starting and ending vertices of all the edges
-            //that would be inserted in the graph
+            //If the number of edges to be inserted in the graph is more than 0, then get the starting and ending vertices
+            //of all the edges that would be inserted in the graph
             if(number_of_edges > 0)
             {
                 cout << "Enter the starting and ending vertex of each edge separated by space:\n";
