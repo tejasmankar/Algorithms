@@ -122,7 +122,8 @@ void modified_breadth_first_search(int source_vertex, int vertex_connected_compo
                     vertex_queue.push(adjacent_vertex);
                     visited_vertex[adjacent_vertex] = true;
                     //Each newly discovered vertex is assigned the same connected_component_label as that of the current source_vertex
-                    //as both the source_vertex and the newly discovered vertex belong to the same connected component
+                    //as all the vertices discovered by performing BFS on the source_vertex are present in the same connected component
+                    //as that of the source_vertex
                     connected_component_label[adjacent_vertex] = vertex_connected_component_label;
                 }
             }
