@@ -15,9 +15,9 @@ int main(void)
     int number_of_vertices(0), number_of_edges(0), starting_vertex(-1), ending_vertex(-1), source_vertex(-1), index(0);
     cout << "Enter the number of vertices to be inserted in the graph:\n";
     cin >> number_of_vertices;
-    if(number_of_vertices < 2)
+    if(number_of_vertices < 1)
     {
-        cout << "The undirected graph must have at least two vertices\n";
+        cout << "The undirected graph must have at least one vertex\n";
     }
     else
     {
@@ -39,15 +39,19 @@ int main(void)
         }
         else
         {
-            cout << "Enter the starting and ending vertex of each edge separated by space:\n";
-            for(index = 0; index < number_of_edges; index++)
+            //If the number of edges in the graph is more than 0, then get the starting and ending vertices of all the edges
+            //that would be inserted in the graph
+            if(number_of_edges > 0)
             {
-                cin >> starting_vertex >> ending_vertex;
-                //Insert each vertex in the adjacency list of the other vertex
-                adjacency_list[starting_vertex].push_back(ending_vertex);
-                adjacency_list[ending_vertex].push_back(starting_vertex);
+                cout << "Enter the starting and ending vertex of each edge separated by space:\n";
+                for(index = 0; index < number_of_edges; index++)
+                {
+                    cin >> starting_vertex >> ending_vertex;
+                    //Insert each vertex in the adjacency list of the other vertex
+                    adjacency_list[starting_vertex].push_back(ending_vertex);
+                    adjacency_list[ending_vertex].push_back(starting_vertex);
+                }
             }
-
             cout << "Enter the source vertex(The vertex from which the BFS algorithm would begin):\n";
             cin >> source_vertex;
             //Since the graph vertices are numbered from 0 to number_of_vertices - 1, it is invalid if the
