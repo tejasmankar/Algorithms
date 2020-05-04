@@ -83,8 +83,8 @@ int main(void)
     return 0;
 }
 
-//Returns a vector containing the shortest distance of each vertex present in the given adjacency_list from
-//the given source_vertex. Here we are passing a reference to the adjacency list
+//Updates the given connected_component_label vector by assigning all the vertices present in the same connected component as that of
+//the given source_vertex the same connected component label which is equal to the given vertex_connected_component_label value
 void modified_breadth_first_search(int source_vertex, int vertex_connected_component_label, vector<int> &connected_component_label, vector< vector<int> > &adjacency_list)
 {
     //Queue in which the graph vertices are added for processing
