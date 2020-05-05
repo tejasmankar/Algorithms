@@ -53,8 +53,10 @@ int main(void)
                     adjacency_list[ending_vertex].push_back(starting_vertex);
                 }
             }
+
             cout << "Enter the source vertex(The vertex from which the BFS algorithm would begin):\n";
             cin >> source_vertex;
+
             //Since the graph vertices are numbered from 0 to number_of_vertices - 1, it is invalid if the
             //source_vertex value does not fall in this range
             if((source_vertex > number_of_vertices - 1) || (source_vertex  < 0))
@@ -101,26 +103,23 @@ vector<int> breadth_first_search(int source_vertex, vector< vector<int> > &adjac
     {
         //Get the element present at the front of the queue
         int queue_front_vertex = vertex_queue.front();
-        //If the vertex present at the front of the queue is connected to at least one other vertex
-        if(adjacency_list[queue_front_vertex].size() > 0)
+
+        //For all the vertices adjacent to the queue_front_vertex which are not visited yet, insert that
+        //vertex in the queue, set its entry in visited_vertex to true and store its shortest distance from
+        //the source_vertex value in the shortest_distance_from_source_vertex vector
+        for(int index = 0; index < adjacency_list[queue_front_vertex].size(); index++)
         {
-            //For all the vertices adjacent to the queue_front_vertex which are not visited yet, insert that
-            //vertex in the queue, set its entry in visited_vertex to true and store its shortest distance from
-            //the source_vertex value in the shortest_distance_from_source_vertex vector
-            for(int index = 0; index < adjacency_list[queue_front_vertex].size(); index++)
+            //adjacent_vertex variable stores one of the vertices adjacent to the queue_front_vertex
+            int adjacent_vertex = adjacency_list[queue_front_vertex][index];
+            //If the adjacent_vertex is not visited
+            if(!visited_vertex[adjacent_vertex])
             {
-                //adjacent_vertex variable stores one of the vertices adjacent to the queue_front_vertex
-                int adjacent_vertex = adjacency_list[queue_front_vertex][index];
-                //If the adjacent_vertex is not visited
-                if(!visited_vertex[adjacent_vertex])
-                {
-                    vertex_queue.push(adjacent_vertex);
-                    visited_vertex[adjacent_vertex] = true;
-                    //The shortest distance of the adjacent_vertex from the given source_vertex is one more than the shortest
-                    //distance of the queue_front_vertex from the source_vertex(or the vertex due to which the adjacent_vertex
-                    //was inserted in the vertex_queue)
-                    shortest_distance_from_source_vertex[adjacent_vertex] = shortest_distance_from_source_vertex[queue_front_vertex] + 1;
-                }
+                vertex_queue.push(adjacent_vertex);
+                visited_vertex[adjacent_vertex] = true;
+                //The shortest distance of the adjacent_vertex from the given source_vertex is one more than the shortest
+                //distance of the queue_front_vertex from the source_vertex(or the vertex due to which the adjacent_vertex
+                //was inserted in the vertex_queue)
+                shortest_distance_from_source_vertex[adjacent_vertex] = shortest_distance_from_source_vertex[queue_front_vertex] + 1;
             }
         }
         //Remove the front element of the queue

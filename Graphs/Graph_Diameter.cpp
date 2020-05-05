@@ -57,6 +57,7 @@ int main(void)
 
             //Variable to store the value of the diameter of the graph
             int graph_diameter(-1);
+
             //Loop over all the vertices present in the graph because we need to perform BFS on every individual
             //vertex to find the diameter of the graph
             for(index = 0; index < number_of_vertices; index++)
@@ -102,26 +103,22 @@ void breadth_first_search(int source_vertex, vector<int> &shortest_distance_from
     {
         //Get the element present at the front of the queue
         int queue_front_vertex = vertex_queue.front();
-        //If the vertex present at the front of the queue is connected to at least one other vertex
-        if(adjacency_list[queue_front_vertex].size() > 0)
+        //For all the vertices adjacent to the queue_front_vertex which are not visited yet, insert that
+        //vertex in the queue, set its entry in visited_vertex to true and store its shortest distance from
+        //the source_vertex value in the shortest_distance_from_source_vertex vector
+        for(int index = 0; index < adjacency_list[queue_front_vertex].size(); index++)
         {
-            //For all the vertices adjacent to the queue_front_vertex which are not visited yet, insert that
-            //vertex in the queue, set its entry in visited_vertex to true and store its shortest distance from
-            //the source_vertex value in the shortest_distance_from_source_vertex vector
-            for(int index = 0; index < adjacency_list[queue_front_vertex].size(); index++)
+            //adjacent_vertex variable stores one of the vertices adjacent to the queue_front_vertex
+            int adjacent_vertex = adjacency_list[queue_front_vertex][index];
+            //If the adjacent_vertex is not visited
+            if(!visited_vertex[adjacent_vertex])
             {
-                //adjacent_vertex variable stores one of the vertices adjacent to the queue_front_vertex
-                int adjacent_vertex = adjacency_list[queue_front_vertex][index];
-                //If the adjacent_vertex is not visited
-                if(!visited_vertex[adjacent_vertex])
-                {
-                    vertex_queue.push(adjacent_vertex);
-                    visited_vertex[adjacent_vertex] = true;
-                    //The shortest distance of the adjacent_vertex from the given source_vertex is one more than the shortest
-                    //distance of the queue_front_vertex from the source_vertex(or the vertex due to which the adjacent_vertex
-                    //was inserted in the vertex_queue)
-                    shortest_distance_from_source_vertex[adjacent_vertex] = shortest_distance_from_source_vertex[queue_front_vertex] + 1;
-                }
+                vertex_queue.push(adjacent_vertex);
+                visited_vertex[adjacent_vertex] = true;
+                //The shortest distance of the adjacent_vertex from the given source_vertex is one more than the shortest
+                //distance of the queue_front_vertex from the source_vertex(or the vertex due to which the adjacent_vertex
+                //was inserted in the vertex_queue)
+                shortest_distance_from_source_vertex[adjacent_vertex] = shortest_distance_from_source_vertex[queue_front_vertex] + 1;
             }
         }
         //Remove the front element of the queue

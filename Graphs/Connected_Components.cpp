@@ -106,26 +106,22 @@ void modified_breadth_first_search(int source_vertex, int vertex_connected_compo
     {
         //Get the element present at the front of the queue
         int queue_front_vertex = vertex_queue.front();
-        //If the vertex present at the front of the queue is connected to at least one other vertex
-        if(adjacency_list[queue_front_vertex].size() > 0)
+        //For all the vertices adjacent to the queue_front_vertex which are not visited yet, insert that
+        //vertex in the queue, set its entry in visited_vertex to true and store the connected component
+        //label corresponding to each adjacent_vertex in the connected_component_label vector
+        for(int index = 0; index < adjacency_list[queue_front_vertex].size(); index++)
         {
-            //For all the vertices adjacent to the queue_front_vertex which are not visited yet, insert that
-            //vertex in the queue, set its entry in visited_vertex to true and store the connected component
-            //label corresponding to each adjacent_vertex in the connected_component_label vector
-            for(int index = 0; index < adjacency_list[queue_front_vertex].size(); index++)
+            //adjacent_vertex variable stores one of the vertices adjacent to the queue_front_vertex
+            int adjacent_vertex = adjacency_list[queue_front_vertex][index];
+            //If the adjacent_vertex is not visited
+            if(!visited_vertex[adjacent_vertex])
             {
-                //adjacent_vertex variable stores one of the vertices adjacent to the queue_front_vertex
-                int adjacent_vertex = adjacency_list[queue_front_vertex][index];
-                //If the adjacent_vertex is not visited
-                if(!visited_vertex[adjacent_vertex])
-                {
-                    vertex_queue.push(adjacent_vertex);
-                    visited_vertex[adjacent_vertex] = true;
-                    //Each newly discovered vertex is assigned the same connected_component_label as that of the current source_vertex
-                    //as all the vertices discovered by performing BFS on the source_vertex are present in the same connected component
-                    //as that of the source_vertex
-                    connected_component_label[adjacent_vertex] = vertex_connected_component_label;
-                }
+                vertex_queue.push(adjacent_vertex);
+                visited_vertex[adjacent_vertex] = true;
+                //Each newly discovered vertex is assigned the same connected_component_label as that of the current source_vertex
+                //as all the vertices discovered by performing BFS on the source_vertex are present in the same connected component
+                //as that of the source_vertex
+                connected_component_label[adjacent_vertex] = vertex_connected_component_label;
             }
         }
         //Remove the front element of the queue
