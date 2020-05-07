@@ -5,7 +5,7 @@
 
 using namespace std;
 
-//Program to implement Breadth First Search on an undirected graph
+//Program to implement Breadth First Search(BFS) on an undirected graph
 
 vector<int> breadth_first_search(int, vector< vector<int> >&);
 
@@ -92,7 +92,7 @@ vector<int> breadth_first_search(int source_vertex, vector< vector<int> > &adjac
     //Vector to store the shortest distance of each vertex from the source vertex
     vector<int> shortest_distance_from_source_vertex(adjacency_list.size());
 
-    //Initially, insert just the source_vertex in the queue, set the corresponding entry in visited_vertex to true
+    //Initially, insert just the source_vertex in the queue, set the corresponding entry in the visited_vertex vector to true
     //and update its shortest distance value to 0
     vertex_queue.push(source_vertex);
     visited_vertex[source_vertex] = true;

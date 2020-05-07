@@ -111,8 +111,8 @@ bool is_bipartite(int source_vertex, vector<int> &vertex_label, vector< vector<i
     {
         //Get the element present at the front of the queue
         int queue_front_vertex = vertex_queue.front();
-        //For all the vertices adjacent to the queue_front_vertex which are not visited yet, insert that vertex in the
-        //queue, set its entry in visited_vertex to true and store its vertex label in the vertex_label vector
+        //For each vertex adjacent to the queue_front_vertex which is not visited yet, insert that vertex in the queue and
+        //set its entry in the vertex_label vector to a value other than that of the queue_front_vertex label value
         for(int index = 0; index < adjacency_list[queue_front_vertex].size(); index++)
         {
             //adjacent_vertex variable stores one of the vertices adjacent to the queue_front_vertex

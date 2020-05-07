@@ -92,7 +92,7 @@ void breadth_first_search(int source_vertex, vector<int> &shortest_distance_from
     //inserted in the queue
     vector<bool> visited_vertex(adjacency_list.size());
 
-    //Initially, insert just the source_vertex in the queue, set the corresponding entry in visited_vertex to true
+    //Initially, insert just the source_vertex in the queue, set the corresponding entry in the visited_vertex vector to true
     //and update its shortest distance value to 0
     vertex_queue.push(source_vertex);
     visited_vertex[source_vertex] = true;
