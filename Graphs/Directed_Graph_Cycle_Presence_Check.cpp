@@ -24,7 +24,7 @@ vector<int> vertex_departure_label;
 bool cycle_presence_check(int, vector< vector<int> >&);
 
 //Driver function
-int main(void)
+int main()
 {
     int number_of_vertices(0), number_of_edges(0), starting_vertex(-1), ending_vertex(-1), source_vertex(-1), index(0);
     cout << "Enter the number of vertices to be inserted in the graph:\n";
@@ -74,15 +74,19 @@ int main(void)
             //the size of the vertex_departure_label vector
             vertex_departure_label.resize(number_of_vertices, MAX_SIZE);
 
-            //Passing the first vertex in the graph(by index) as the source vertex(We can pass any other vertex as well)
-            if(cycle_presence_check(0, adjacency_list))
+            //Passing each vertex in the graph as the source vertex to check if the given vertex is a part of any cycle
+            //We are passing every vertex to the cycle_presence_check function since there is a possibility of having a
+            //vertex which is unreachable from some vertex in the graph and is also a part of a cycle. otherwise, we may
+            //not be able to visit such a vertex
+            for(int vertex = 0; vertex < number_of_vertices; vertex++)
             {
-                cout << "The given directed graph contains a cycle\n";
+                if(cycle_presence_check(vertex, adjacency_list))
+                {
+                    cout << "The given directed graph contains a cycle\n";
+                    return 0;
+                }
             }
-            else
-            {
-                cout << "The given directed graph does not contain a cycle\n";
-            }
+            cout << "The given directed graph does not contain a cycle\n";
         }
     }
     return 0;
@@ -120,8 +124,8 @@ bool cycle_presence_check(int source_vertex, vector< vector<int> > &adjacency_li
     }
     //Update the vertex_departure_label of the current source_vertex by incrementing the vertex_departure_label_counter
     vertex_departure_label[source_vertex] = vertex_departure_label_counter++;
+
     //Returning false indicates that the subtree rooted at the given source_vertex does not contain any edge which forms
     //or is a part of a cycle
     return false;
 }
-
