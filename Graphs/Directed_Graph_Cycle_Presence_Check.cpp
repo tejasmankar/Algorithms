@@ -80,10 +80,13 @@ int main()
             //not be able to visit such a vertex
             for(int vertex = 0; vertex < number_of_vertices; vertex++)
             {
-                if(cycle_presence_check(vertex, adjacency_list))
+                if(!visited_vertex[vertex])
                 {
-                    cout << "The given directed graph contains a cycle\n";
-                    return 0;
+                    if(cycle_presence_check(vertex, adjacency_list))
+                    {
+                        cout << "The given directed graph contains a cycle\n";
+                        return 0;
+                    }
                 }
             }
             cout << "The given directed graph does not contain a cycle\n";
