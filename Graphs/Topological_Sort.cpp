@@ -1,9 +1,10 @@
 #include<iostream>
 #include<vector>
+#include<stack>
 
 using namespace std;
 
-//Program to check whether a directed graph contains a cycle using Depth First Search(DFS)
+//Program to implement topological sort on a directed graph
 
 //Defines the maximum number of vertices which the graph can hold
 #define MAX_SIZE 999
@@ -20,6 +21,8 @@ vector<bool> visited_vertex;
 //subtree rooted at that vertex for all the vertices in the directed graph. We assign label 1 to the vertex from which we departed
 //first and so on. We depart from a vertex after all its adjacent vertices are visited
 vector<int> vertex_departure_label;
+
+stack<int> vertex_stack;
 
 bool cycle_presence_check(int, vector< vector<int> >&);
 
@@ -84,12 +87,21 @@ int main()
                 {
                     if(cycle_presence_check(source_vertex, adjacency_list))
                     {
-                        cout << "The given directed graph contains a cycle\n";
+                        cout << "The given directed graph contains a cycle and hence topological sorting is not possible\n";
                         return 0;
                     }
                 }
             }
-            cout << "The given directed graph does not contain a cycle\n";
+
+            cout << "The vertices in order as per the topological sort are:\n";
+
+            //Print all the vertices present in the vertex_stack and pop them off the vertex_stack
+            //The vertices will be printed in an order following the topological sort condition
+            while(!vertex_stack.empty())
+            {
+                cout << vertex_stack.top() << "\n";
+                vertex_stack.pop();
+            }
         }
     }
     return 0;
@@ -98,6 +110,9 @@ int main()
 //Returns true if the given directed graph contains a cycle or false otherwise
 bool cycle_presence_check(int source_vertex, vector< vector<int> > &adjacency_list)
 {
+    //Initialize the boolean variable which will store true/false depending upon whether any vertex in the DFS subtree rooted
+    //at the current source_vertex is a part of a cycle to false
+    bool is_cycle_present(false);
     //Set the entry corresponding to the given source_vertex in the visited_vertex vector to true
     visited_vertex[source_vertex] = true;
 
@@ -112,7 +127,11 @@ bool cycle_presence_check(int source_vertex, vector< vector<int> > &adjacency_li
         //graph contains a cycle
         if(!visited_vertex[adjacent_vertex])
         {
-            return cycle_presence_check(adjacent_vertex, adjacency_list);
+            if(cycle_presence_check(adjacent_vertex, adjacency_list))
+            {
+                is_cycle_present = true;
+                break;
+            }
         }
         //If the adjacent_vertex is already visited, then it is the destination vertex of a backedge if it's vertex departure
         //label is greater than that of the current source_vertex(in whose subtree the given adjacent_vertex is present)
@@ -121,14 +140,17 @@ bool cycle_presence_check(int source_vertex, vector< vector<int> > &adjacency_li
         {
             if(vertex_departure_label[adjacent_vertex] >= vertex_departure_label[source_vertex])
             {
-                return true;
+                is_cycle_present = true;
+                break;
             }
         }
     }
     //Update the vertex_departure_label of the current source_vertex by incrementing the vertex_departure_label_counter
     vertex_departure_label[source_vertex] = vertex_departure_label_counter++;
 
-    //Returning false indicates that the subtree rooted at the given source_vertex does not contain any edge which forms
-    //or is a part of a cycle
-    return false;
+    //If all the adjacent vertices of the current source_vertex are visited and the DFS subtree rooted at the source_vertex
+    //does not contain an edge which is a part of a cycle, push the source_vertex onto the stack
+    vertex_stack.push(source_vertex);
+
+    return is_cycle_present;
 }
