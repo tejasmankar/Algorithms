@@ -68,7 +68,7 @@ int main(void)
                 //Vector to store the label corresponding to the set to which each vertex in the graph belongs
                 vector<int> vertex_label(number_of_vertices);
                 //Initializing the set labels of all the vertices to -1
-                //Vertices belonging to either of the two independent sets are labeled l or 2
+                //Vertices belonging to either of the two independent sets are labeled 0 or 1
                 for(index = 0; index < number_of_vertices; index++)
                 {
                     vertex_label[index] = -1;
@@ -111,12 +111,14 @@ bool is_bipartite(int source_vertex, vector<int> &vertex_label, vector< vector<i
     {
         //Get the element present at the front of the queue
         int queue_front_vertex = vertex_queue.front();
+
         //For each vertex adjacent to the queue_front_vertex which is not visited yet, insert that vertex in the queue and
         //set its entry in the vertex_label vector to a value other than that of the queue_front_vertex label value
         for(int index = 0; index < adjacency_list[queue_front_vertex].size(); index++)
         {
             //adjacent_vertex variable stores one of the vertices adjacent to the queue_front_vertex
             int adjacent_vertex = adjacency_list[queue_front_vertex][index];
+
             //If the adjacent_vertex is not visited
             if(vertex_label[adjacent_vertex] == -1)
             {
@@ -131,9 +133,11 @@ bool is_bipartite(int source_vertex, vector<int> &vertex_label, vector< vector<i
                 return false;
             }
         }
+
         //Remove the front element of the queue
         vertex_queue.pop();
     }
+
     //If none of the adjacent vertices have the same vertex_label, then the graph is bipartite
     return true;
 }
