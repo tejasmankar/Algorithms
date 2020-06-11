@@ -44,18 +44,23 @@ int main(void)
 {
     //Get the EdgeObject vector consisting of objects containing the length, starting and ending vertex corresponding to every edge in the graph
     vector<EdgeObject> edge_object_vector = fetch_edge_object_vector();
+
     //If there are no graph edges having a positive length, we exit the program
     if(edge_object_vector.size() == 0)
     {
         return 1;
     }
+
     //Sort the edge objects in the edge_object_vector in ascending order of their edge_length values
     //The structure parameter to be used for comparing any two edge objects is specified by the compare_parameter function
     sort(edge_object_vector.begin(), edge_object_vector.end(), compare_parameter);
+
     //Get the edge objects of the edges present in the minimum spanning tree
     vector<EdgeObject> minimum_spanning_tree = build_minimum_spanning_tree(edge_object_vector);
+
     //Variable to store the sum of the lengths of all the edges present in the minimum spanning tree
     int minimum_spanning_tree_total_weight(0);
+
     cout << "The starting and ending vertices and the edge lengths of the edges added in the minimum spanning tree are:\n";
     for(int edge_object = 0; edge_object < minimum_spanning_tree.size(); edge_object++)
     {
@@ -73,7 +78,7 @@ int main(void)
 //Accepts user input and returns the EdgeObject vector containing an edge object corresponding to each edge
 vector<EdgeObject> fetch_edge_object_vector()
 {
-    int number_of_vertices(0), number_of_edges(0), starting_vertex(-1), ending_vertex(-1), index(0), edge_length(0);
+    int number_of_vertices(0), number_of_edges(0), starting_vertex(-1), ending_vertex(-1), edge_length(0);
     //Vector to store the edge object corresponding to each edge present in the graph
     vector<EdgeObject> edge_object_vector;
 
@@ -86,9 +91,9 @@ vector<EdgeObject> fetch_edge_object_vector()
     else
     {
         cout << "The vertices inserted in the graph are:\n";
-        for(index = 0; index < number_of_vertices; index++)
+        for(int vertex = 0; vertex < number_of_vertices; vertex++)
         {
-            cout << index << "\n";
+            cout << vertex << "\n";
         }
 
         cout << "Enter the number of edges to be inserted in the graph:\n";
@@ -105,7 +110,7 @@ vector<EdgeObject> fetch_edge_object_vector()
             //only one vertex because in that case the graph will not have any edge
             if(number_of_edges > 0)
             {
-                for(index = 0; index < number_of_edges; index++)
+                for(int edge = 0; edge < number_of_edges; edge++)
                 {
                     cout << "Enter the starting and ending vertex of the edge separated by space:\n";
                     cin >> starting_vertex >> ending_vertex;
@@ -122,6 +127,7 @@ vector<EdgeObject> fetch_edge_object_vector()
                     edge_object_vector.push_back(edge_object);
                 }
             }
+            //Create UnionFind objects for all the vertices and store the corresponding pointers to those objects in the union_find_object_vector
             initialize_union_find_object_vector(number_of_vertices);
         }
     }
@@ -152,7 +158,7 @@ bool compare_parameter(EdgeObject a, EdgeObject b)
 }
 
 //Selects the edges to be added in the minimum spanning tree and returns a vector containing the edge objects corresponding
-//to the edges present in the generated minimum spanning tree
+//to the edges present in the generated minimum spanning tree, given the edge_object_vector of the graph
 vector<EdgeObject> build_minimum_spanning_tree(vector<EdgeObject> edge_object_vector)
 {
     //Vector to store the edges of the minimum spanning tree
