@@ -48,7 +48,7 @@ int main()
         //If the number of edges is more than n * (n-1) i.e. the maximum number of edges which a directed graph on n vertices could have
         if(number_of_edges > number_of_vertices * (number_of_vertices - 1))
         {
-            cout << "A directed graph on " << number_of_vertices << " vertices has at most " << number_of_vertices * (number_of_vertices - 1) / 2 << " edge(s)\n";
+            cout << "A directed graph on " << number_of_vertices << " vertices has at most " << number_of_vertices * (number_of_vertices - 1) << " edge(s)\n";
         }
         else
         {

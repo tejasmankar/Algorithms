@@ -52,7 +52,7 @@ int main()
         //If the number of edges is more than n * (n-1) i.e. the maximum number of edges which an directed graph on n vertices could have
         if(number_of_edges > number_of_vertices * (number_of_vertices - 1))
         {
-            cout << "A directed graph on " << number_of_vertices << " vertices has at most " << number_of_vertices * (number_of_vertices - 1) / 2 << " edge(s)\n";
+            cout << "A directed graph on " << number_of_vertices << " vertices has at most " << number_of_vertices * (number_of_vertices - 1) << " edge(s)\n";
         }
         else
         {
@@ -121,6 +121,7 @@ bool cycle_presence_check(int source_vertex, vector< vector<int> > &adjacency_li
     {
         //adjacent_vertex variable stores one of the vertices adjacent to the given source_vertex
         int adjacent_vertex = adjacency_list[source_vertex][index];
+
         //If the adjacent_vertex is not visited, perform DFS recursively with the adjacent_vertex as the new source_vertex
         //This is to determine if any edge of the subtree rooted at adjacent_vertex is a backedge because if any edge is a
         //backedge which connects a vertex having a larger vertex departure label/time, then we can conclude that the directed
@@ -145,6 +146,7 @@ bool cycle_presence_check(int source_vertex, vector< vector<int> > &adjacency_li
             }
         }
     }
+
     //Update the vertex_departure_label of the current source_vertex by incrementing the vertex_departure_label_counter
     vertex_departure_label[source_vertex] = vertex_departure_label_counter++;
 
