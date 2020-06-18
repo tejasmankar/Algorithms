@@ -12,8 +12,8 @@ using namespace std;
 //Vector containing the label corresponding to the partition to which each vertex in the undirected graph belongs
 vector<int> partition_label;
 
-vector< pair< int, pair<int,int> > > build_minimum_spanning_tree(vector< vector< pair<int,int> > >&, int);
-int find_other_endpoint_vertex(vector< vector< pair<int,int> > >&, pair<int, int>);
+vector< pair< int, pair<int, int> > > build_minimum_spanning_tree(vector< vector< pair<int, int> > >&, int);
+int find_other_endpoint_vertex(vector< vector< pair<int, int> > >&, pair<int, int>);
 
 //Driver function
 int main(void)
@@ -36,7 +36,7 @@ int main(void)
         //Adjacency list represented by a vector of vectors to store the vertices adjacent to each vertex of the undirected graph
         //Each entry of this vector of vectors would be a pair of integers. The first integer will be the length of the edge from
         //the vertex represented by the corresponding vector of vector index to the vertex represented by the second integer of the pair
-        vector< vector< pair<int,int> > > adjacency_list(number_of_vertices);
+        vector< vector< pair<int, int> > > adjacency_list(number_of_vertices);
 
         cout << "Enter the number of edges to be inserted in the graph:\n";
         cin >> number_of_edges;
@@ -86,12 +86,12 @@ int main(void)
             else
             {
                 //Get the edge lengths and the endpoint vertices of the edges present in the minimum spanning tree
-                vector< pair< int, pair<int,int> > > minimum_spanning_tree = build_minimum_spanning_tree(adjacency_list, source_vertex);
+                vector< pair< int, pair<int, int> > > minimum_spanning_tree = build_minimum_spanning_tree(adjacency_list, source_vertex);
 
                 //Variable to store the sum of the lengths of all the edges present in the minimum spanning tree
                 int minimum_spanning_tree_total_weight(0);
 
-                cout << "The starting and ending vertices and the edge lengths of the edges added in the minimum spanning tree are:\n";
+                cout << "The starting and ending vertices and the edge lengths of the edges present in the minimum spanning tree are:\n";
                 for(int mst_edge = 0; mst_edge < minimum_spanning_tree.size(); mst_edge++)
                 {
                     cout << "Starting vertex: " << minimum_spanning_tree[mst_edge].second.first << " ";
@@ -110,17 +110,17 @@ int main(void)
 
 //Selects the edges and vertices to be added in the minimum spanning tree and returns a vector containing the details corresponding
 //to the edges present in the generated minimum spanning tree, given the adjacency_list of the graph and the source_vertex
-vector< pair< int, pair<int,int> > > build_minimum_spanning_tree(vector< vector< pair<int,int> > > &adjacency_list, int source_vertex)
+vector< pair< int, pair<int, int> > > build_minimum_spanning_tree(vector< vector< pair<int, int> > > &adjacency_list, int source_vertex)
 {
     //Minimum priority queue to return the edge having the smallest length among all the edges being considered
     priority_queue< pair<int, int>, vector< pair<int, int> >, greater< pair<int, int> > > min_priority_queue;
     //Vector to store the edge lengths and the endpoint vertices of the edges which are added to the MST
-    vector< pair< int, pair<int,int> > > minimum_spanning_tree;
+    vector< pair< int, pair<int, int> > > minimum_spanning_tree;
 
     //Insert a pair into the priority queue containing the source vertex and value of edge length as 0 initially
     min_priority_queue.push(make_pair(0, source_vertex));
 
-    //Loop until the priority is not empty
+    //Loop until the priority queue is not empty
     while(!min_priority_queue.empty())
     {
         //Get the edge in the priority queue having the minimum length
@@ -169,7 +169,7 @@ vector< pair< int, pair<int,int> > > build_minimum_spanning_tree(vector< vector<
 
 //Returns the other endpoint vertex of an edge having the given length other than the one already present in the
 //minimum_edge_length pair containing the edge length and one endpoint vertex
-int find_other_endpoint_vertex(vector< vector< pair<int,int> > > &adjacency_list, pair<int, int> minimum_edge_length)
+int find_other_endpoint_vertex(vector< vector< pair<int, int> > > &adjacency_list, pair<int, int> minimum_edge_length)
 {
     //variable to store the selected vertex
     int edge_vertex(0);

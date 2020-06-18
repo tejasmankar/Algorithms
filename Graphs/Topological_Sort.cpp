@@ -65,7 +65,7 @@ int main()
                 for(index = 0; index < number_of_edges; index++)
                 {
                     cin >> starting_vertex >> ending_vertex;
-                    //Insert each vertex in the adjacency list of the other vertex
+                    //Insert the ending vertex in the adjacency list of the starting vertex
                     adjacency_list[starting_vertex].push_back(ending_vertex);
                 }
             }
