@@ -122,9 +122,8 @@ vector< pair< int, pair<int, int> > > find_shortest_path(vector< vector< pair<in
     //Minimum priority queue to return the edge having the smallest length among all the edges being considered
     priority_queue< pair<int, pair<int, int> >, vector< pair<int, pair<int, int> > >, greater< pair<int, pair<int, int> > > > min_priority_queue;
     //Vector to store the edge lengths and the endpoint vertices of the edges which are added to the shortest path
-    //This vector is of length number_of_vertices - 1 since the shortest path between any two vertices in a simple
-    //directed graph would have at most number_of_vertices - 1 edges
-    vector< pair< int, pair<int, int> > > shortest_path(adjacency_list.size() - 1);
+    //This vector is of length number_of_vertices since we are adding entries to it indexed by the destination vertex label
+    vector< pair< int, pair<int, int> > > shortest_path(adjacency_list.size());
 
     //Insert a pair into the priority queue containing the edge length and a pair containing a placeholder vertex and the given source vertex
     //The value of this edge length is 0 since we are starting at the source vertex directly
@@ -133,6 +132,9 @@ vector< pair< int, pair<int, int> > > find_shortest_path(vector< vector< pair<in
     //Assign the source vertex a shortest distance label of 0
     shortest_distance_label[source_vertex] = 0;
 
+    //Insert the source vertex into the shortest path vector
+    shortest_path[source_vertex] = make_pair(0, make_pair(adjacency_list.size(), source_vertex));
+
     //Loop until the priority queue is not empty
     while(!min_priority_queue.empty())
     {
@@ -140,10 +142,6 @@ vector< pair< int, pair<int, int> > > find_shortest_path(vector< vector< pair<in
         pair< int, pair<int, int> > minimum_shortest_distance_label = min_priority_queue.top();
         //Remove the vertex having the minimum shortest distance label value from the priority queue
         min_priority_queue.pop();
-
-        //Add the length and the endpoint vertices of the selected edge and vertex at the index corresponding to the destination(second)
-        //vertex label of the edge in the shortest_path vector
-        shortest_path[minimum_shortest_distance_label.second.second] = make_pair(minimum_shortest_distance_label.first, make_pair(minimum_shortest_distance_label.second.first, minimum_shortest_distance_label.second.second));
 
         //Check if a shorter path exists between the source vertex and each of the out-adjacent vertices of the newly added vertex containing the edge
         //between the newly added vertex and the current adjacent vertex being considered
@@ -158,6 +156,9 @@ vector< pair< int, pair<int, int> > > find_shortest_path(vector< vector< pair<in
             if(shortest_distance_label[minimum_shortest_distance_label.second.second] + adjacent_vertex.first < shortest_distance_label[adjacent_vertex.second.second])
             {
                 shortest_distance_label[adjacent_vertex.second.second] = shortest_distance_label[minimum_shortest_distance_label.second.second] + adjacent_vertex.first;
+                //Add the updated shortest length and the endpoint vertices of the selected edge and vertex at the index corresponding to the destination(second)
+                //vertex label of the edge in the shortest_path vector
+                shortest_path[adjacent_vertex.second.second] = make_pair(adjacent_vertex.first, make_pair(adjacent_vertex.second.first, adjacent_vertex.second.second));
                 min_priority_queue.push(adjacent_vertex);
             }
         }
@@ -195,7 +196,6 @@ void print_shortest_path(vector< pair< int, pair<int, int> > > shortest_path, in
             shortest_path_vertices.push(parent_vertex);
             parent_vertex = shortest_path[parent_vertex.second.first];
         }
-
         cout << "The starting and ending vertices and the edge lengths of the edges present in the shortest path are:\n";
         while(!shortest_path_vertices.empty())
         {
