@@ -147,7 +147,7 @@ vector< pair< int, pair<int, int> > > find_shortest_path(vector< vector< pair<in
         //between the newly added vertex and the current adjacent vertex being considered
         for(int index = 0; index < adjacency_list[minimum_shortest_distance_label.second.second].size(); index++)
         {
-            pair< int, pair<int,int> > adjacent_vertex = adjacency_list[minimum_shortest_distance_label.second.second][index];
+            pair< int, pair<int, int> > adjacent_vertex = adjacency_list[minimum_shortest_distance_label.second.second][index];
 
             //If the length of the path from the source vertex to the current adjacent vertex containing the edge between the vertex which is newly
             //added to the shortest path and the current adjacent vertex is less than the length of the current shortest path between the source vertex
