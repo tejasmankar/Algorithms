@@ -169,9 +169,6 @@ vector< pair< int, pair<int, int> > > find_shortest_path(vector< vector< pair<in
 //Prints the vertices and the lengths of the edges present in the shortest path and the total length of the shortest path between the given source_vertex and destination_vertex
 void print_shortest_path(vector< pair< int, pair<int, int> > > shortest_path, int number_of_vertices, int source_vertex, int destination_vertex)
 {
-    //Variable to store the sum of the lengths of all the edges present in the shortest path between the source and the destination vertex
-    int shortest_path_total_weight(0);
-
     //If the shortest_distance_label of the destination vertex is INFINITY, then there is no path in the graph between the source and the destination vertex
     if(shortest_distance_label[destination_vertex] == INFINITY)
     {
@@ -194,15 +191,12 @@ void print_shortest_path(vector< pair< int, pair<int, int> > > shortest_path, in
             shortest_path_vertices.push(parent_vertex);
             parent_vertex = shortest_path[parent_vertex.second.first];
         }
-        cout << "The starting and ending vertices and the edge lengths of the edges present in the shortest path are:\n";
+        cout << "The starting and ending vertices and the edge lengths of the edges present in the shortest path between " << source_vertex << " and " << destination_vertex << " are:\n";
         while(!shortest_path_vertices.empty())
         {
             cout << "Starting vertex: " << shortest_path_vertices.top().second.first << " ";
             cout << "Ending vertex: " << shortest_path_vertices.top().second.second << " ";
             cout << "Edge length: " << shortest_path_vertices.top().first << "\n";
-
-            //Update the total weight of the shortest path by adding the length of the current edge to it
-            shortest_path_total_weight += shortest_path_vertices.top().first;
 
             //Pop the top element out of the stack
             shortest_path_vertices.pop();
