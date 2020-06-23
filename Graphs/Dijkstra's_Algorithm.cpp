@@ -5,7 +5,7 @@
 
 using namespace std;
 
-//Program to implement Dijkstra's algorithm to find the shortest path between any two vertices in a weighted directed graph
+//Program to implement Dijkstra's algorithm to individually find the shortest path between the given source vertex and all the other vertices in a weighted directed graph
 
 //Defines the maximum length which any edge in the graph can have. The length of any edge is greater than or equal to zero
 #define MAX_EDGE_LENGTH 999
@@ -83,32 +83,30 @@ int main(void)
             //any path between any pair of vertices. Resize the vector so that it can hold the labels of all the vertices in the graph
             shortest_distance_label.resize(number_of_vertices, INFINITY);
 
-            cout << "Enter the source and destination vertex between which the shortest path is to be found:\n";
-            cin >> source_vertex >> destination_vertex;
+            cout << "Enter the source vertex from which the shortest path is to be found:\n";
+            cin >> source_vertex;
 
             //Flag variable to identify if the source or destination vertex is invalid. It is set to 1 if any of the two vertices is invalid
             int flag(0);
 
-            //Since the graph vertices are numbered from 0 to number_of_vertices - 1, it is invalid if the source_vertex or
-            //destination_vertex value does not fall in this range
+            //Since the graph vertices are numbered from 0 to number_of_vertices - 1, it is invalid if the source_vertex
+            //value does not fall in this range
             if((source_vertex > number_of_vertices - 1) || (source_vertex  < 0))
             {
                 cout << "The source vertex entered is invalid\n";
                 flag = 1;
             }
-            if((destination_vertex > number_of_vertices - 1) || (destination_vertex  < 0))
-            {
-                cout << "The destination vertex entered is invalid\n";
-                flag = 1;
-            }
 
-            //If none of the source or destination vertex is invalid
+            //If the source vertex value is not invalid
             if(!flag)
             {
                 //Get the edge lengths and the endpoint vertices of the edges present in the shortest path between the source and the destination vertex
                 vector< pair< int, pair<int, int> > > shortest_path = find_shortest_path(adjacency_list, source_vertex);
                 //Print the shortest path and the total length of the shortest path
-                print_shortest_path(shortest_path, number_of_vertices, source_vertex, destination_vertex);
+                for(destination_vertex = 0; destination_vertex < number_of_vertices; destination_vertex++)
+                {
+                    print_shortest_path(shortest_path, number_of_vertices, source_vertex, destination_vertex);
+                }
             }
         }
     }
