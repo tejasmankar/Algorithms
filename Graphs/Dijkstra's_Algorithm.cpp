@@ -13,7 +13,7 @@ using namespace std;
 //Defines the initial length of the shortest path between any two vertices in the directed graph
 #define INFINITY 32767
 
-//Vector containing the shortest distance values between the source vertex and all the other vertices in the graph
+//Vector containing the shortest path distance values between the source vertex and all the other vertices in the graph
 vector<int> shortest_distance_label;
 
 vector< pair< int, pair<int, int> > > find_shortest_path(vector< vector< pair<int, pair<int, int> > > >&, int);
@@ -22,7 +22,7 @@ void print_shortest_path(vector< pair< int, pair<int, int> > >, int, int, int);
 //Driver function
 int main(void)
 {
-    int number_of_vertices(0), number_of_edges(0), starting_vertex(-1), ending_vertex(-1), source_vertex(-1), destination_vertex(-1), edge_length(0);
+    int number_of_vertices(0), number_of_edges(0), starting_vertex(-1), ending_vertex(-1), source_vertex(-1), edge_length(0);
     cout << "Enter the number of vertices to be inserted in the graph:\n";
     cin >> number_of_vertices;
     if(number_of_vertices < 1)
@@ -75,6 +75,7 @@ int main(void)
                     }
 
                     //Insert the pair containing the edge length and the pair of starting and ending vertex of the edge in the adjacency list
+                    //location having the index value equal to the starting_vertex value
                     adjacency_list[starting_vertex].push_back(make_pair(edge_length, make_pair(starting_vertex, ending_vertex)));
                 }
             }
@@ -83,14 +84,13 @@ int main(void)
             //any path between any pair of vertices. Resize the vector so that it can hold the labels of all the vertices in the graph
             shortest_distance_label.resize(number_of_vertices, INFINITY);
 
-            cout << "Enter the source vertex from which the shortest path is to be found:\n";
+            cout << "Enter the source vertex from which the shortest paths are to be found:\n";
             cin >> source_vertex;
 
-            //Flag variable to identify if the source or destination vertex is invalid. It is set to 1 if any of the two vertices is invalid
+            //Flag variable to identify if the given source vertex value is invalid. It is set to 1 if the source vertex value is invalid
             int flag(0);
 
-            //Since the graph vertices are numbered from 0 to number_of_vertices - 1, it is invalid if the source_vertex
-            //value does not fall in this range
+            //Since the graph vertices are numbered from 0 to number_of_vertices - 1, it is invalid if the source_vertex value does not fall in this range
             if((source_vertex > number_of_vertices - 1) || (source_vertex  < 0))
             {
                 cout << "The source vertex entered is invalid\n";
@@ -100,10 +100,10 @@ int main(void)
             //If the source vertex value is not invalid
             if(!flag)
             {
-                //Get the edge lengths and the endpoint vertices of the edges present in the shortest path between the source and the destination vertex
+                //Get the edge lengths and the endpoint vertices of the edges present in the shortest path between the source vertex and all the other vertices
                 vector< pair< int, pair<int, int> > > shortest_path = find_shortest_path(adjacency_list, source_vertex);
-                //Print the shortest path and the total length of the shortest path
-                for(destination_vertex = 0; destination_vertex < number_of_vertices; destination_vertex++)
+                //Print the shortest path and the total length of the shortest path between the source vertex and every other vertex
+                for(int destination_vertex = 0; destination_vertex < number_of_vertices; destination_vertex++)
                 {
                     print_shortest_path(shortest_path, number_of_vertices, source_vertex, destination_vertex);
                 }
@@ -153,9 +153,9 @@ vector< pair< int, pair<int, int> > > find_shortest_path(vector< vector< pair<in
             //and add the updated distance label value in the priority queue
             if(shortest_distance_label[minimum_shortest_distance_label.second.second] + adjacent_vertex.first < shortest_distance_label[adjacent_vertex.second.second])
             {
+                //Add the updated shortest length in the shortest_distance_label vector and the endpoint vertices of the selected edge in the shortest_path
+                //vector at the index corresponding to the destination(second) vertex label of the edge
                 shortest_distance_label[adjacent_vertex.second.second] = shortest_distance_label[minimum_shortest_distance_label.second.second] + adjacent_vertex.first;
-                //Add the updated shortest length and the endpoint vertices of the selected edge and vertex at the index corresponding to the destination(second)
-                //vertex label of the edge in the shortest_path vector
                 shortest_path[adjacent_vertex.second.second] = make_pair(adjacent_vertex.first, make_pair(adjacent_vertex.second.first, adjacent_vertex.second.second));
                 min_priority_queue.push(adjacent_vertex);
             }
@@ -172,7 +172,7 @@ void print_shortest_path(vector< pair< int, pair<int, int> > > shortest_path, in
     //If the shortest_distance_label of the destination vertex is INFINITY, then there is no path in the graph between the source and the destination vertex
     if(shortest_distance_label[destination_vertex] == INFINITY)
     {
-        cout << "There is no path connecting the source and destination vertex in the directed graph\n";
+        cout << "There is no path connecting " << source_vertex << " and " << destination_vertex << " in the directed graph\n";
     }
     else
     {
@@ -191,15 +191,19 @@ void print_shortest_path(vector< pair< int, pair<int, int> > > shortest_path, in
             shortest_path_vertices.push(parent_vertex);
             parent_vertex = shortest_path[parent_vertex.second.first];
         }
-        cout << "The starting and ending vertices and the edge lengths of the edges present in the shortest path between " << source_vertex << " and " << destination_vertex << " are:\n";
-        while(!shortest_path_vertices.empty())
+        //If both the source and the destination vertex are the same, then there is no edge connecting the same vertices in the directed graph
+        if(source_vertex != destination_vertex)
         {
-            cout << "Starting vertex: " << shortest_path_vertices.top().second.first << " ";
-            cout << "Ending vertex: " << shortest_path_vertices.top().second.second << " ";
-            cout << "Edge length: " << shortest_path_vertices.top().first << "\n";
+            cout << "The starting and ending vertices and the edge lengths of the edges present in the shortest path between " << source_vertex << " and " << destination_vertex << " are:\n";
+            while(!shortest_path_vertices.empty())
+            {
+                cout << "Starting vertex: " << shortest_path_vertices.top().second.first << " ";
+                cout << "Ending vertex: " << shortest_path_vertices.top().second.second << " ";
+                cout << "Edge length: " << shortest_path_vertices.top().first << "\n";
 
-            //Pop the top element out of the stack
-            shortest_path_vertices.pop();
+                //Pop the top element out of the stack
+                shortest_path_vertices.pop();
+            }
         }
         cout << "The total length of the shortest path between " << source_vertex << " and " << destination_vertex << " is " << shortest_distance_label[destination_vertex] << "\n";
     }
