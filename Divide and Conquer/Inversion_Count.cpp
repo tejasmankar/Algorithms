@@ -102,10 +102,11 @@ int split_inversion_count(int values[], int start_index, int middle_index, int e
             values[original_array_index++] = left_subarray[left_subarray_index++];
         }
         //Else, update the inversion_counter to account for the total number of inversions in the current sub-array which have the
-        //element pointed by the right_subarray_index as it's smaller element and add the right sub-array element to the original array
+        //element pointed by the right_subarray_index as it's smaller element and add the right sub-array element to the original array.
+        //The number of inversions satisfying this condition = length of the left sub-array - the current value of left_subarray_index
         else
         {
-            inversion_counter += (middle_index - left_subarray_index + 1);
+            inversion_counter += (middle_index - start_index - left_subarray_index + 1);
             values[original_array_index++] = right_subarray[right_subarray_index++];
         }
     }
