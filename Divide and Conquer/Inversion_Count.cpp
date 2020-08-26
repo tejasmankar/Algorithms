@@ -42,7 +42,7 @@ void populate_array(int source_array[], int target_array[], int start_index, int
     }
 }
 
-//Recursively sorts the sub-array of the given array starting from the given start and end index in ascending order
+//Recursively sorts the sub-array of the given array starting from the given start index to the given end index in ascending order
 //and returns the number of inversions present within that sub-array
 int inversion_count(int values[], int start_index, int end_index)
 {

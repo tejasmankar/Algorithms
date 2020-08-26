@@ -46,7 +46,7 @@ void populate_array(int source_array[], int target_array[], int start_index, int
     }
 }
 
-//Recursively sorts the sub-array of the given array starting from the given start and end index in ascending order
+//Recursively sorts the sub-array of the given array starting from the given start index to the given end index in ascending order
 void merge_sort(int values[], int start_index, int end_index)
 {
     //If the sub-array from start_index to end_index has size at least two
