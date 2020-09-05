@@ -9,6 +9,7 @@ void populate_array(int[], int[], int, int);
 int inversion_count(int[], int, int);
 int split_inversion_count(int[], int, int, int);
 
+//Driver function
 int main(void)
 {
     int number_of_values(0);

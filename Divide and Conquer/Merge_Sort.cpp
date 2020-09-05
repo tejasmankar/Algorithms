@@ -8,6 +8,7 @@ void populate_array(int[], int[], int, int);
 void merge_sort(int[], int, int);
 void merge_sorted_subarrays(int[], int, int, int);
 
+//Driver function
 int main(void)
 {
     int number_of_values(0);
