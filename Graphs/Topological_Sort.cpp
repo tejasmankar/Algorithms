@@ -73,7 +73,7 @@ int main()
             //Set the entry corresponding to each graph vertex in the visited_vertex vector to false and initialize the size of
             //the visited_vertex vector
             visited_vertex.resize(number_of_vertices, false);
-            //Initialize the entry corresponding to each graph vertex in the vertex_departure_label vector to false and initialize
+            //Initialize the entry corresponding to each graph vertex in the vertex_departure_label vector to MAX_SIZE and initialize
             //the size of the vertex_departure_label vector
             vertex_departure_label.resize(number_of_vertices, MAX_SIZE);
 
